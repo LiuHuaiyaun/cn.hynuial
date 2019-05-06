@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hynuial.dms.dao.UserDao">
+	<select id="findUserByQuery" parameterType="User" resultMap="userMap">
+		select
+			u.user_id user_id,
+			u.username username,
+			u.cellphone cellphone,
+			u.password password,
+			u.gender gender,
+			r.role_id role_id,
+			r.role_name role_name,
+			r.create_date role_create_date,
+			r.update_date role_update_date,
+			u.id_card id_card,
+			u.create_date create_date,
+			u.update_date update_date
+		from
+			sys_user u join sys_role r on u.role_id=r.role_id
+		where
+			<if test="userId != null">u.user_id=#{userId} and</if>
+			<if test="cellphone != null">u.cellphone=#{cellphone} and</if>
+			<if test="password != null">u.password=#{password} and</if>
+			1=1
+	</select>
+	
+	<select id="findUserListByPage" parameterType="java.util.Map" resultMap="userMap">
+		select
+			u.user_id user_id,
+			u.username username,
+			u.cellphone cellphone,
+			u.password password,
+			u.gender gender,
+			r.role_id role_id,
+			r.role_name role_name,
+			r.create_date role_create_date,
+			r.update_date role_update_date,
+			u.id_card id_card,
+			u.create_date create_date,
+			u.update_date update_date
+		from
+			sys_user u join sys_role r on u.role_id=r.role_id
+		<if test="begin != null ">
+			limit #{begin}, #{size}
+		</if>
+	</select>
+	
+	<resultMap type="User" id="userMap">
+		<id property="userId" javaType="java.lang.Long" column="user_id"/>
+		<result property="username" javaType="java.lang.String" column="username"/>
+		<result property="cellphone" javaType="java.lang.String" column="cellphone"/>
+		<result property="password" javaType="java.lang.String" column="password"/>
+		<result property="gender" javaType="java.lang.String" column="gender"/>
+		<result property="idCard" javaType="java.lang.String" column="id_card"/>
+		<result property="createDate" javaType="java.util.Date" column="create_date"/>
+		<result property="updateDate" javaType="java.util.Date" column="update_date"/>
+		<association property="role" javaType="Role">
+			<id property="roleId" javaType="java.lang.Long" column="role_id"/>
+			<result property="roleName" javaType="java.lang.String" column="role_name"/>
+			<result property="createDate" javaType="java.util.Date" column="role_create_date"/>
+		<result property="updateDate" javaType="java.util.Date" column="role_update_date"/>
+		</association>
+	</resultMap>
+</mapper>
