@@ -14,7 +14,7 @@ import cn.hynuial.dms.bean.entity.User;
 import cn.hynuial.dms.bean.vo.Page;
 import cn.hynuial.dms.service.UserService;
 
-@Controller("userController")
+//@Controller("userController")
 @RequestMapping("/user")
 public class UserController {
 	@Resource(name = "userService")
@@ -53,5 +53,18 @@ public class UserController {
 		// 使用业务层进行分页查询
 		page = userService.getUserListByPage(page);
 		return new ModelAndView("user/user_list", "page", page);
+	}
+	@RequestMapping(value="user_registry",method=RequestMethod.POST)
+	public String saveUser(User user) {
+		if (user != null && user.getUsername()!=null && !"".equals(user.getUsername())&&
+				user.getPassword()!=null && !"".equals(user.getPassword()) && user.getCellphone() != null&&
+				!"".equals(user.getCellphone())) {
+			
+		}
+		return "redirect:registry";
+	}
+	@RequestMapping(value="registry",method=RequestMethod.GET)
+	public String userRegistryForm() {
+		return "user/user_registry_form";
 	}
 }
