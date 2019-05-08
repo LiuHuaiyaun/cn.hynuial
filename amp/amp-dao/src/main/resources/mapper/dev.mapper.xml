@@ -39,6 +39,8 @@
 			<if test="devId !=null">dev_id=#{devId} and</if>
 			<if test="devNo !=null">dev_no=#{devNo} and</if>
 			<if test="devName !=null">dev_name=#{devName} and</if>
+			<if test="cellphone !=null">cellphone=#{cellphone} and</if>
+			<if test="password !=null">password=#{password} and</if>
 			1=1
 	</select>
 	<select id="findDevByPage" parameterType="cn.kgc.amp.beans.vo.Page" resultMap="devMap">
