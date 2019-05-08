@@ -23,14 +23,6 @@
 	
 	<dependencies>
 		
-		<!-- 添加dms-commonse项目依赖关系[BEGIN] -->
-  		<dependency>
-  			<groupId>cn.hynuial</groupId>
-  			<artifactId>dms_commons</artifactId>
-  			<version>${dms-commons.version}</version>
-  		</dependency>
-  		<!-- 添加dms-commonse项目依赖关系[END] -->
-
 		<!-- 添加Spring MVC依赖关系[BEGIN] -->
 		<dependency>
 			<groupId>org.springframework</groupId>

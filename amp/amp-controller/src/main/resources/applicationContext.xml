@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+							http://www.springframework.org/schema/beans/spring-beans.xsd
+							http://www.springframework.org/schema/context
+							http://www.springframework.org/schema/context/spring-context.xsd
+							http://www.springframework.org/schema/tx
+							http://www.springframework.org/schema/tx/spring-tx.xsd">
+	<!-- 设定properties文件路径[BEGIN] -->
+	<context:property-placeholder location="classpath*:/jdbc.properties"/>
+	<!-- 设定properties文件路径[END] -->
+	
+	<!-- 开启注解扫描机制，设定注解扫描基础包位置[BEGIN] -->
+	<context:component-scan base-package="cn.kgc.amp">
+		<!-- 不扫描@Controller和@ControllerAdvice -->
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+		<context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+	</context:component-scan>
+	<!-- 开启注解扫描机制，设定注解扫描基础包位置[END] -->
+	
+	<!-- 配置DataSource数据源信息[BEGIN] -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+		<!-- 注入JDBC基本信息 -->
+		<property name="driverClassName" value="${jdbc.driver}"/>
+		<property name="url" value="${jdbc.url}"/>
+		<property name="username" value="${jdbc.username}"/>
+		<property name="password" value="${jdbc.password}"/>
+		<!-- 配置连接池信息 -->
+		<property name="minIdle" value="${druid.minIdle}"/>
+		<property name="maxActive" value="${druid.maxActive}"/>
+		<property name="initialSize" value="${druid.initialSize}"/>
+		<property name="minEvictableIdleTimeMillis" value="${druid.minEvictableIdleTimeMillis}"/>
+		<property name="maxEvictableIdleTimeMillis" value="${druid.maxEvictableIdleTimeMillis}"/>
+	</bean>
+	<!-- 配置DataSource数据源信息[END] -->
+	
+	<!-- 配置SqlSessionFactoryBean信息[BEGIN] -->
+	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="typeAliasesPackage" value="cn.kgc.amp.beans.entity"/>
+		<property name="mapperLocations" value="classpath*:/mapper/*.mapper.xml"/>
+		<property name="configuration">
+			<bean class="org.apache.ibatis.session.Configuration">
+				<property name="dev">
+					<bean class="cn.kgc.amp.beans.entity.Dev"></bean>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 配置SqlSessionFactoryBean信息[END] -->
+	
+	<!-- 配置自动扫描数据持久层接口位置[BEGIN] -->
+	<bean id="mapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean"/>
+		<property name="basePackage" value="cn.kgc.amp.dao"/>
+	</bean>
+	<!-- 配置自动扫描数据持久层接口位置[END] -->
+	
+	<!-- 配置事务管理机制[BEGIN] -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	<!-- 配置事务管理机制[END] -->
+	
+	<!-- 使用注解方式来切入事务管理[BEGIN] -->
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+	<!-- 使用注解方式来切入事务管理[END] -->
+</beans>
