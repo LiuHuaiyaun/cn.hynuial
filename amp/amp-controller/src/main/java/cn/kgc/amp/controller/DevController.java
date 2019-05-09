@@ -3,11 +3,14 @@ package cn.kgc.amp.controller;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import cn.kgc.amp.base.controller.BaseController;
 import cn.kgc.amp.beans.entity.Dev;
+import cn.kgc.amp.beans.vo.Page;
 import cn.kgc.amp.service.DevService;
 import cn.kgc.amp.util.MD5Util;
 
@@ -83,4 +86,5 @@ public class DevController extends BaseController {
 		}
 		return "redirect:registry";
 	}
+	
 }

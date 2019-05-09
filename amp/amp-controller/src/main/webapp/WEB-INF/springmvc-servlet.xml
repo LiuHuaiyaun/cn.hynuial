@@ -29,6 +29,17 @@
 	</bean>
 	<!-- 配置视图解析器[END] -->
 	
+	<!-- 配置JSON视图解析器[BEGIN] -->
+	<bean id="jsonView" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="defaultCharset" value="UTF-8"/>
+		<property name="supportedMediaTypes">
+			<list>
+				<value>application/json;charset=utf-8</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 配置JSON视图解析器[END] -->
+	
 	<!-- 过滤静态资源[BEGIN] -->
 	<mvc:default-servlet-handler/>
 	<!-- 过滤静态资源[END] -->

@@ -33,19 +33,8 @@
 		<servlet-name>springmvc</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	<!-- 配置Spring MVC核心Servlet[END] -->\
-	
-	<!-- 配置JSON格式视图解析器[BEGIN] -->
-	<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-		<property name="defaultCharset" value="UTF-8"/>
-		<property name="suppertedMediaType">
-			<list>
-				<value>application/json;charset=utf-8</value>
-			</list>
-		</property>
-	</bean>
-	<!-- 配置JSON格式视图解析器[END] -->
-	
+	<!-- 配置Spring MVC核心Servlet[END] -->
+		
 	<!-- 配置项目编码过滤器[BEGIN] -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
