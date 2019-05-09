@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kgc.amp.dao.DevDao">
+	<resultMap type="cn.kgc.amp.beans.entity.Dev" id="devMap">
+		<id property="devId" javaType="java.lang.Long" column="dev_id"/>
+		<result property="devNo" javaType="java.lang.String" column="dev_no"/>
+		<result property="devName" javaType="java.lang.String" column="dev_name"/>
+		<result property="password" javaType="java.lang.String" column="password"/>
+		<result property="cellphone" javaType="java.lang.String" column="cellphone"/>
+		<result property="email" javaType="java.lang.String" column="email"/>
+		<result property="devInfo" javaType="java.lang.String" column="devInfo"/>
+		<result property="createDate" javaType="java.util.Date" column="create_date"/>
+		<result property="updateDate" javaType="java.util.Date" column="update_date"/>
+	</resultMap>
+	<insert id="save" parameterType="cn.kgc.amp.beans.entity.Dev">
+		insert  into sys_dev
+			(dev_no, dev_name, password, cellphone, email, dev_info) 
+		values 
+			(#{devNo},#{devName},#{password},#{cellphone},#{email},#{devInfo})
+	</insert>
+	<update id="update" parameterType="cn.kgc.amp.beans.entity.Dev">
+		update 
+			sys_dev
+		set
+			dev_no=#{devNo}, dev_name=#{devName}, password=#{password}, cellphone=#{cellphone}, email=#{email}, dev_info#{devInfo} 
+		where 
+			dev_id=#{devId}
+	</update>
+	<delete id="delete" parameterType="cn.kgc.amp.beans.entity.Dev">
+		delete from sys_dev where dev_id=#{devId}
+	</delete>
+	<select id="findDevsByQuery" parameterType="cn.kgc.amp.beans.entity.Dev" resultMap="devMap">
+		select
+			dev_id,dev_no, dev_name, password, cellphone, email, dev_info
+		from 
+			sys_dev
+		where 
+			<if test="devId !=null">dev_id=#{devId} and</if>
+			<if test="devNo !=null">dev_no=#{devNo} and</if>
+			<if test="devName !=null">dev_name=#{devName} and</if>
+			<if test="cellphone !=null">cellphone=#{cellphone} and</if>
+			<if test="password !=null">password=#{password} and</if>
+			1=1
+	</select>
+	<select id="findDevByPage" parameterType="cn.kgc.amp.beans.vo.Page" resultMap="devMap">
+		select
+			dev_id,dev_no, dev_name, password, cellphone, email, dev_info
+		from 
+			sys_dev
+		<if test="pageNum != null">limit ${(pageNum-1)*pageSize},#{pageSize}</if>
+	</select>
+	
+</mapper>
