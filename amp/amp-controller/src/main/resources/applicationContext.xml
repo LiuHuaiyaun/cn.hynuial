@@ -42,13 +42,13 @@
 		<property name="dataSource" ref="dataSource"/>
 		<property name="typeAliasesPackage" value="cn.kgc.amp.beans.entity"/>
 		<property name="mapperLocations" value="classpath*:/mapper/*.mapper.xml"/>
-		<property name="configuration">
+		<!-- <property name="configuration">
 			<bean class="org.apache.ibatis.session.Configuration">
 				<property name="dev">
 					<bean class="cn.kgc.amp.beans.entity.Dev"></bean>
 				</property>
 			</bean>
-		</property>
+		</property> -->
 	</bean>
 	<!-- 配置SqlSessionFactoryBean信息[END] -->
 	

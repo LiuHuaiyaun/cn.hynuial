@@ -11,7 +11,7 @@ import cn.kgc.amp.beans.entity.Dev;
 import cn.kgc.amp.service.DevService;
 import cn.kgc.amp.util.MD5Util;
 
-//@Controller("devController")
+@Controller("devController")
 @RequestMapping("/dev")
 public class DevController extends BaseController {
 	@Resource(name = "devService")
