@@ -13,7 +13,7 @@
 		<result property="createDate" javaType="java.util.Date" column="create_date"/>
 		<result property="updateDate" javaType="java.util.Date" column="update_date"/>
 	</resultMap>
-	<insert id="save" parameterType="cn.kgc.amp.beans.entity.Dev">
+	<insert id="save" keyProperty="id" useGeneratedKeys="true" parameterType="cn.kgc.amp.beans.entity.Dev">
 		insert  into sys_dev
 			(dev_no, dev_name, password, cellphone, email, dev_info) 
 		values 
