@@ -16,7 +16,7 @@
 						<input type="text" placeholder="Developer Cellphone" required="" id="cellphone" name = "cellphone" />
 					</div>
 					<div>
-						<input type="password" placeholder="Password" required="" id="password" value = "password"/>
+						<input type="password" placeholder="Password" required="" id="password" name = "password" value = "password"/>
 					</div>
 					<div>
 						<input type="submit" value="登&nbsp;录" />

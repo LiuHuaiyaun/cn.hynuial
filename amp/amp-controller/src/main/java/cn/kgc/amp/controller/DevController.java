@@ -1,17 +1,22 @@
 package cn.kgc.amp.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.kgc.amp.base.controller.BaseController;
 import cn.kgc.amp.beans.entity.Dev;
 import cn.kgc.amp.beans.vo.Page;
 import cn.kgc.amp.service.DevService;
+import cn.kgc.amp.util.DevUtil;
 import cn.kgc.amp.util.MD5Util;
 
 /**
@@ -73,18 +78,24 @@ public class DevController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/registry",method=RequestMethod.POST)
-	public String registryDev(Dev dev) throws Exception {
-		if(dev.getCellphone() != null && !"".equals(dev.getCellphone()) &&
-				dev.getPassword() != null && !"".equals(dev.getPassword())) {
+	@ResponseBody
+	public Map<String, Object> registryDev(Dev dev) throws Exception {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		if(DevUtil.registryDev(dev)) {
 			//通过MD5Util对用户密码进行加密
+			
 			dev.setPassword(MD5Util.encrypt(dev.getPassword()));
+			//添加开发者编码号
+			dev.setDevNo(DevUtil.getDevNo());
 			int count = devService.saveDev(dev);
 			if (count > 0) {
-				session.setAttribute("dev", dev);
-				return "redirect:home";
+				resultMap.put("dev", dev);
+				resultMap.put("result", true);
+				return resultMap;
 			}
 		}
-		return "redirect:registry";
+		resultMap.put("result", false);
+		return resultMap;
 	}
 	
 }

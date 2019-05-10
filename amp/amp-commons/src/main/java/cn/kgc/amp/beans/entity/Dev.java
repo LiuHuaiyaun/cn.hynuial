@@ -78,5 +78,8 @@ public class Dev implements Serializable{
 		this.updateDate = updateDate;
 	}
 	
+	public String toString() {
+		return devName + "" + devNo;
+	}
 	
 }
