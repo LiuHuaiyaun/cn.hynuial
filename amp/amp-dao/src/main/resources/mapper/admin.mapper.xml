@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kgc.amp.dao.AdminDao">
+	<resultMap type="cn.kgc.amp.beans.entity.Admin" id="adminMap">
+		<id property="adminId" javaType="java.lang.Long" column="admin_id"/>
+		<result property="adminNo" javaType="java.lang.String" column="admin_no"/>
+		<result property="adminName" javaType="java.lang.String" column="admin_name"/>
+		<result property="password" javaType="java.lang.String" column="password"/>
+		<collection property="role" ofType="cn.kgc.amp.beans.entity.Role" select="selectRole" column="role_id">
+			<id property="roleId" javaType="java.lang.Long" column="role_id"/>
+			<result property="roleName" javaType="java.lang.String" column="role_name"/>
+		</collection>
+		<collection property="createAdmin" ofType="cn.kgc.amp.beans.entity.Admin" select="selectAdmin" column="admin_id">
+			<id property="adminId" javaType="java.lang.Long" column="admin_id"/>
+			<result property="adminNo" javaType="java.lang.String" column="admin_no"/>
+			<result property="adminName" javaType="java.lang.String" column="admin_name"/>
+		</collection>
+		<collection property="updateAdmin" ofType="cn.kgc.amp.beans.entity.Admin" select="selectAdmin" column="admin_id">
+			<id property="adminId" javaType="java.lang.Long" column="admin_id"/>
+			<result property="adminNo" javaType="java.lang.String" column="admin_no"/>
+			<result property="adminName" javaType="java.lang.String" column="admin_name"/>
+		</collection>
+	</resultMap>
+	<insert id="save" keyProperty="adminId" useGeneratedKeys="true" parameterType="cn.kgc.amp.beans.entity.Admin">
+		insert  into sys_admin
+			(admin_no, admin_name, password, role_id, create_admin, update_admin) 
+		values 
+			(#{adminNo},#{adminName},#{password},${role.roleId},${createAdmin.adminId},${updateAdmin.adminId})
+	</insert>
+	<update id="update" parameterType="cn.kgc.amp.beans.entity.Admin">
+		update 
+			sys_admin
+		set
+			admin_no=#{adminNo}, admin_name=#{adminName}, password=#{password}, 
+			role_id=${role.roleId}, create_admin=${createAdmin.adminId}, update_admin=${updateAdmin.adminId} 
+		where 
+			admin_id=#{adminId}
+	</update>
+	<delete id="delete" parameterType="cn.kgc.amp.beans.entity.Admin">
+		delete from sys_admin where admin_id=#{adminId}
+	</delete>
+	<select id="findAdminsByQuery" parameterType="cn.kgc.amp.beans.entity.Admin" resultMap="adminMap">
+		select
+			admin_id,admin_no, admin_name, password, role_id, create_admin, update_admin
+		from 
+			sys_admin
+		where 
+			<if test="adminId !=null">admin_id=#{adminId} and</if>
+			<if test="adminNo !=null">admin_no=#{adminNo} and</if>
+			<if test="adminName !=null">admin_name=#{adminName} and</if>
+			<if test="password !=null">password=#{password} and</if>
+			1=1
+	</select>
+	<select id="selectAdmin" parameterType="cn.kgc.amp.beans.entity.Admin" resultType="cn.kgc.amp.beans.entity.Admin">
+		select
+			admin_id,admin_no, admin_name, role_id
+		from 
+			sys_admin
+		where 
+			admin_id=#{adminId}
+	</select>
+	<select id="findAdminByPage" parameterType="cn.kgc.amp.beans.vo.Page" resultMap="adminMap">
+		select
+			admin_id,admin_no, admin_name, password, role_id, create_admin, update_admin
+		from 
+			sys_admin
+		<if test="pageNum != null">limit ${(pageNum-1)*pageSize},#{pageSize}</if>
+	</select>
+	<select id="selectRole" parameterType="cn.kgc.amp.beans.entity.Role" resultType="cn.kgc.amp.beans.entity.Role">
+		select
+			role_id, role_name, create_date, update_date
+		from 
+			sys_role
+		where
+			role_id=#{roleId}
+	</select>
+</mapper>

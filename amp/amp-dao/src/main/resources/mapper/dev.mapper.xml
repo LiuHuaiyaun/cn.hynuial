@@ -23,7 +23,7 @@
 		update 
 			sys_dev
 		set
-			dev_no=#{devNo}, dev_name=#{devName}, password=#{password}, cellphone=#{cellphone}, email=#{email}, dev_info#{devInfo} 
+			dev_no=#{devNo}, dev_name=#{devName}, password=#{password}, cellphone=#{cellphone}, email=#{email}, dev_info=#{devInfo} 
 		where 
 			dev_id=#{devId}
 	</update>
