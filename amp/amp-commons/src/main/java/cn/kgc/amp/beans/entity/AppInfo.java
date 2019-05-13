@@ -17,9 +17,9 @@ public class AppInfo implements Serializable {
 	private Dev dev;				//开发人
 	private Category category;		//类别
 	private String appInfo;			//简介
-	private int flatformId;			//使用平台
-	private int statusId;			//审核状态
-	private int sale_id;			//APP状态
+	private Dictionary platformId;			//使用平台
+	private Dictionary statusId;			//审核状态
+	private Dictionary saleId;			//APP状态
 	private Admin checker;			//审核人
 	private Date createDate;		//创建时间
 	private Date updateDate;		//修改时间
@@ -54,24 +54,6 @@ public class AppInfo implements Serializable {
 	public void setAppInfo(String appInfo) {
 		this.appInfo = appInfo;
 	}
-	public int getFlatformId() {
-		return flatformId;
-	}
-	public void setFlatformId(int flatformId) {
-		this.flatformId = flatformId;
-	}
-	public int getStatusId() {
-		return statusId;
-	}
-	public void setStatusId(int statusId) {
-		this.statusId = statusId;
-	}
-	public int getSale_id() {
-		return sale_id;
-	}
-	public void setSale_id(int sale_id) {
-		this.sale_id = sale_id;
-	}
 	public Admin getChecker() {
 		return checker;
 	}
@@ -89,6 +71,24 @@ public class AppInfo implements Serializable {
 	}
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
+	}
+	public Dictionary getPlatformId() {
+		return platformId;
+	}
+	public void setPlatformId(Dictionary platformId) {
+		this.platformId = platformId;
+	}
+	public Dictionary getStatusId() {
+		return statusId;
+	}
+	public void setStatusId(Dictionary statusId) {
+		this.statusId = statusId;
+	}
+	public Dictionary getSaleId() {
+		return saleId;
+	}
+	public void setSaleId(Dictionary saleId) {
+		this.saleId = saleId;
 	}
 	
 	

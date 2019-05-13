@@ -15,12 +15,6 @@ import cn.kgc.amp.service.DevService;
 import cn.kgc.amp.util.DevUtil;
 import cn.kgc.amp.util.MD5Util;
 
-/**
- * <b>开发者平台控制器</b>
- * @author LiuHuaiyaun
- * @version 1.0 
- * @since 2019-05-09
- */
 @Controller("devController")
 @RequestMapping("/dev")
 public class DevController extends BaseController {
@@ -51,8 +45,9 @@ public class DevController extends BaseController {
 			dev.setPassword(MD5Util.encrypt(dev.getPassword()));
 			dev = devService.loginDev(dev);
 			if (dev != null) {
+				System.out.println("登陆成功！");
 				session.setAttribute("dev", dev);
-				return "redirect:home";
+				return "/app/appList";
 			}
 		}
 		return "redirect:login";

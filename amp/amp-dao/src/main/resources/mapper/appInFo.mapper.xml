@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kgc.amp.dao.AppDao">
+	<select id="findListByPageAndQuery" parameterType="java.util.Map" resultMap="appInFoMap">
+		select  ai.`app_id` `app_id`,
+			ai.`app_name` `app_name`,
+			ai.`dev_id` `dev_id`,
+			dev.`dev_name` `dev_name`,
+			ai.`category_id` `category_id`,
+			c.`category_name` `category_name`,
+			ai.`logo` `logo`,
+			ai.`app_info` `app_info`,
+			ai.`platform_id` `platform_id`,
+			d.`dictionary_name` `platform_name`,
+			ai.`examine` `examine`,
+			ex.`dictionary_name` `examine_name`,
+			ai.`status` `status`,
+			st.`dictionary_name` `status_name`,
+			ai.`checker` `checker`,
+			a.`admin_no` `admin_no`,
+			a.`admin_name` `admin_name`,
+			ai.`create_date` `create_date`,
+			ai.`update_date` `update_date`
+		from `sys_app_info` ai 
+		join `sys_dev` dev on ai.dev_id=dev.dev_id
+		join `sys_category` c on ai.category_id=c.category_id
+		join `sys_dictionary` d on ai.platform_id=d.dictionary_id 
+		join `sys_dictionary` ex on ai.examine=ex.dictionary_id 
+		join `sys_dictionary` st on ai.status=st.dictionary_id
+		join `sys_admin` a on ai.checker=a.admin_id
+		where 
+			<if test="devId != null">`dev_id` = #{devId} and</if>
+			1=1
+	</select>
+	<resultMap type="cn.kgc.amp.beans.entity.AppInfo" id="appInFoMap">
+		<id property="appId" column="app_id" javaType="java.lang.Long"/>
+		<result property="appName" column="app_name" javaType="java.lang.String"/>
+		<result property="appInfo" column="app_info" javaType="java.lang.String"/>
+		<result property="createDate" column="create_date" javaType="java.util.Date"/>
+		<result property="updateDate" column="update_date" javaType="java.util.Date"/>
+		<association property="dev" javaType="Dev">
+			<id property="devId" column="dev_id" javaType="java.lang.Long"/>
+			<result property="devName" column="dev_name" javaType="java.lang.String"/>
+		</association>
+		<association property="category" javaType="Category">
+			<id property="categoryId" column="category_id" javaType="java.lang.Long"/>
+			<result property="categoryName" column="category_name" javaType="java.lang.String"/>
+		</association>
+		<association property="platformId" javaType="Dictionary">
+			<id property="dictionaryId" column="platform_id" javaType="java.lang.Long"/>
+			<result property="dictionaryName" column="platform_name" javaType="java.lang.String"/>
+		</association>
+		<association property="statusId" javaType="Dictionary">
+			<id property="dictionaryId" column="examine"  javaType="java.lang.Long"/>
+			<result property="dictionaryName" column="examine_name" javaType="java.lang.String"/>
+		</association>
+		<association property="saleId" javaType="Dictionary">
+			<id property="dictionaryId" column="status" javaType="java.lang.Long"/>
+			<result property="dictionaryName" column="status_name" javaType="java.lang.String"/>
+		</association>
+	</resultMap>
+</mapper>
