@@ -40,13 +40,18 @@ public class AppServiceImpl implements AppService{
 				Integer pageSize = page.getPageSize();
 				//查询对象id值
 				Long devId = dev.getDevId();
-				//创建Map集合，并封装查询信息
+				//创建Map集合
 				Map<String, Object> map = new HashMap<String, Object>();
+				//查询页面显示总数
+				map.put("devId", devId);
+				page.setTotalPageSize(appDao.findListByPageAndQuery(map).size());
+				page.setTotalPageNum((page.getTotalPageSize()%pageSize)==0 ? (page.getTotalPageSize() / page.getPageSize()) : 
+									(page.getTotalPageNum() / page.getPageSize() + 1));
+				//查询分页列表
 				map.put("beginIndex", beginIndex);
 				map.put("pageSize", pageSize);
-				map.put("devId", devId);
 				
-				page = appDao.findListByPageAndQuery(map);
+				page.setList(appDao.findListByPageAndQuery(map));
 				
 				return page;
 	}

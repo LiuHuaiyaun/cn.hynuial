@@ -1,5 +1,6 @@
 package cn.kgc.amp.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
@@ -16,6 +17,6 @@ import cn.kgc.amp.beans.vo.Page;
 @Repository("appDao")
 public interface AppDao {
 
-	public Page<AppInfo> findListByPageAndQuery(Map<String, Object> map)throws Exception;
+	public List<AppInfo> findListByPageAndQuery(Map<String, Object> map)throws Exception;
 
 }

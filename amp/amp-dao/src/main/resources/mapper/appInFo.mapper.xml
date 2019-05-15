@@ -32,6 +32,7 @@
 		where 
 			<if test="devId != null">`dev_id` = #{devId} and</if>
 			1=1
+			<if test="beginIndex != null"> limit beginIndex, pageSize</if>
 	</select>
 	<resultMap type="cn.kgc.amp.beans.entity.AppInfo" id="appInFoMap">
 		<id property="appId" column="app_id" javaType="java.lang.Long"/>
